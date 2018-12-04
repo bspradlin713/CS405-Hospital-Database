@@ -20,7 +20,7 @@
 <br>
 <b>Remove a Doctor</b><br>
 
-<form action="BOB DO SOMEHTING" method="post">
+<form action="remove_doc.php" method="post">
 <input type="submit">
 </form>
 
@@ -41,14 +41,14 @@
 <br>
 <b>Remove a Nurse</b><br>
 
-<form action="BOB DO SOMEHTING" method="post">
+<form action="remove_nurse.php" method="post">
 <input type="submit">
 </form>
 
 <br>
 <b>Set Doctor Supervising Nurse</b><br>
 
-<form action="BOB DO SOMEHTING" method="post">
+<form action="works_under.php" method="post">
 <input type="submit">
 </form>
 

@@ -19,21 +19,21 @@
 <br>
 <b>Remove a Patient</b><br>
 
-<form action="php file here" method="post">
+<form action="remove_patient.php" method="post">
 <input type="submit">
 </form>
 
 <br>
 <b>Set Supervising Doctor</b><br>
 
-<form action="php file here" method="post">
+<form action="cares_for.php" method="post">
 <input type="submit">
 </form>
 
 <br>
 <b>Set Primary Nurse</b><br>
 
-<form action="php file here" method="post">
+<form action="primary_nurse.php" method="post">
 <input type="submit">
 </form>
 

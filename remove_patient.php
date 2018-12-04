@@ -18,28 +18,24 @@ function endHTML(){
 }
 
 function makeForm(){
-    echo "<title> Doctor Lookup </title>";
-    echo "<form action=\"add_doc.php\" method=\"get\">\n";
+    echo "<title> Delete a Doctor </title>";
+    echo "<form action=\"remove_doc.php\" method=\"get\">\n";
     echo "\tName <input type='string' name ='name'><br>";
-    echo "\tBirthday <input type='string' name ='bday'><br>";
-    echo "\tStart Date <input type='string' name ='sday'><br>";
     echo "\t<input type='submit'>\n";
     echo "</form>";
 }
 
-function add(){
-    echo "<title> add doctor</title>";
+function remove(){
+    echo "<title>remove patient</title>";
     $value = $_GET['name'];
-    $bday = $_GET['bday'];
-    $sday = $_GET['sday'];
     $link = mysqli_connect("localhost","root", "MS-06ZakuII","hospital");
     if(!$link){
         die("Failed to connect: " . mysqli_connect_error());
     }
-    $sqlresults = "INSERT INTO doctor (name, birthday, start_date) VALUES ('$value', '$bday', '$sday');";
+    $sqlresults = "DELETE FROM patient WHERE name = '$value'";
 
     if ($link->query($sqlresults)) {
-	echo "Added\n";
+	echo "Remove\n";
     }
     else{
         echo "Query failed: ". $link->error. "\n";
@@ -50,7 +46,7 @@ function add(){
 }
 function processForm(){
     startHTML();
-    add();
+    remove();
     endHTML();
 }
 function displayForm(){
