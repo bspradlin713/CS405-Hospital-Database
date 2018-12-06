@@ -26,6 +26,19 @@ function makeForm(){
     echo "\t\t<option value ='Name'> Name </option>\n";
     echo "\t\t<option value ='Patient ID'> Patient ID </option>\n";
     echo "\t<input type='string' name ='name'>\n";
+        echo "\t<input type='checkbox' name='DrPatient' value='Show'> Show Patient's Doctors";
+
+    echo "\t<input type='checkbox' name='nursePatient' value='Show'> Show Patient's Nurses";
+    echo "\t<br>Sort By:\n";
+    echo "\t<select>";
+
+    echo "\t\t<option value='name'>Name</option>";
+    echo "\t\t<option value='bday'>Birthday</option>";
+    echo "\t\t<option value='date'>Date Joined</option>";
+    echo "\t\t<option value='id'>SSID</option>";
+    echo "\t</select>";
+
+
 }
 
 function displayResults(){

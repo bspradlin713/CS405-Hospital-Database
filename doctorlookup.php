@@ -21,8 +21,21 @@ function makeForm(){
     echo "<title> Doctor Lookup </title>";
     echo "<h1>Please enter lookup information below</h1>";
     echo "<form action=\"doctorlookup.php\" method=\"get\">\n";
-    echo "\tDoctor Name:\n";
+    echo "\tDoctor Name: (Blank for All)\n";
     echo "\t<input type='string' name ='name'>\n";
+    echo "\t<input type='checkbox' name='nurseDrRelat' value='Show'> Show which Nurses the Doctor works with:";
+
+    echo "\t<input type='checkbox' name='doctorPatient' value='Show'> Show which Patients the Doctor Cares For:";
+    echo "\t<br>Sort By:\n";
+    echo "\t<select>";
+
+    echo "\t\t<option value='name'>Name</option>";
+    echo "\t\t<option value='bday'>Birthday</option>";
+    echo "\t\t<option value='date'>Date Joined</option>";
+    echo "\t\t<option value='id'>Employee ID</option>";
+    echo "\t</select>";
+
+   
 }
 
 function displayResults(){
