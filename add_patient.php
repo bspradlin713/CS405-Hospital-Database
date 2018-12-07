@@ -34,7 +34,7 @@ function add(){
     $value = $_GET['name'];
     $bday = $_GET['bday'];
     $sday = $_GET['sday'];
-    $link = mysqli_connect("localhost","root", "Password1","hospital");
+    $link = mysqli_connect("localhost","root", "MS-06ZakuII","hospital");
     if(!$link){
         die("Failed to connect: " . mysqli_connect_error());
     }
