@@ -40,7 +40,7 @@ function displayResults(){
     $value = $_GET['name'];
     $lookup = $_GET['category'];
     echo "<h1>Patients with name matching $value</h1>";
-    $link = mysqli_connect("localhost","root", "Password1","hospital");
+    $link = mysqli_connect("localhost","root", "MS-06ZakuII","hospital");
     if(!$link){
         die("Failed to connect: " . mysqli_connect_error());
     }
