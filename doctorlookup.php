@@ -36,7 +36,7 @@ function displayResults(){
     echo "<title> doctor Lookup </title>";
     $value = $_GET['name'];
     echo "<h1>Doctors with name matching $value</h1>";
-    $link = mysqli_connect("localhost","root", "Password1","hospital");
+    $link = mysqli_connect("localhost","root", "MS-06ZakuII","hospital");
     if(!$link){
         die("Failed to connect: " . mysqli_connect_error());
     }
