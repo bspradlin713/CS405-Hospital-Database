@@ -18,7 +18,7 @@ function endHTML(){
 }
 
 function makeForm(){
-    echo "<title> Doctor Lookup </title>";
+    echo "<title> Add Patient </title>";
     echo "<form action=\"add_patient.php\" method=\"get\">\n";
     echo "\tSSN <input type='string' name ='ssn'><br>";
     echo "\tName <input type='string' name ='name'><br>";
@@ -34,7 +34,7 @@ function add(){
     $value = $_GET['name'];
     $bday = $_GET['bday'];
     $sday = $_GET['sday'];
-    $link = mysqli_connect("localhost","root", "MS-06ZakuII","hospital");
+    $link = mysqli_connect("localhost","root", "Password1","hospital");
     if(!$link){
         die("Failed to connect: " . mysqli_connect_error());
     }

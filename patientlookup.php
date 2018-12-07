@@ -26,17 +26,9 @@ function makeForm(){
     echo "\t\t<option value ='Name'> Name </option>\n";
     echo "\t\t<option value ='Patient ID'> Patient ID </option>\n";
     echo "\t<input type='string' name ='name'>\n";
-        echo "\t<input type='checkbox' name='DrPatient' value='Show'> Show Patient's Doctors";
+        echo "\t<input type='checkbox' name='DrPatient' value='Show'> Show Patient's Doctors<br>";
 
     echo "\t<input type='checkbox' name='nursePatient' value='Show'> Show Patient's Nurses";
-    echo "\t<br>Sort By:\n";
-    echo "\t<select>";
-
-    echo "\t\t<option value='name'>Name</option>";
-    echo "\t\t<option value='bday'>Birthday</option>";
-    echo "\t\t<option value='date'>Date Joined</option>";
-    echo "\t\t<option value='id'>SSID</option>";
-    echo "\t</select>";
 
 
 }
@@ -64,7 +56,13 @@ function displayResults(){
         echo "<h3>Patients with matching $lookup:</h3><br>";
         while ($s_names = $q_results->fetch_assoc()) {
             echo $s_names["name"]. "\t\t". $s_names["birthday"]. "\t\t". $s_names["entered_hosptial"]. "<br \>";
-        }
+            if (isset($_GET['DrPatient'])){
+		echo "\t\tServed by Doctor:<br>";
+		$findMe = $s_names['name'];
+		#FIRST PART	
+	    }
+	}
+
     }
 
 
