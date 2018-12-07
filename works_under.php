@@ -30,7 +30,7 @@ function add(){
     echo "<title>set Doctor for Nurse</title>";
     $dName = $_GET['dName'];
     $nName = $_GET['nName'];
-    $link = mysqli_connect("localhost","root", "Password1","hospital");
+    $link = mysqli_connect("localhost","root", "MS-06ZakuII","hospital");
    
     if(!$link){
         die("Failed to connect: " . mysqli_connect_error());
