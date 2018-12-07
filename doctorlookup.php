@@ -23,10 +23,11 @@ function makeForm(){
     echo "<form action=\"doctorlookup.php\" method=\"get\">\n";
     echo "\tDoctor Name: (Blank for All)\n";
     echo "\t<input type='string' name ='name'>\n";
+    echo "\t<br>";
     echo "\t<input type='checkbox' name='nurseDrRelat' value='Show'> Show which Nurses the Doctor works with:";
-
+    echo "\t<br>";
     echo "\t<input type='checkbox' name='doctorPatient' value='Show'> Show which Patients the Doctor Cares For:";
-
+    echo "\t<br>";
 
    
 }
@@ -35,12 +36,16 @@ function displayResults(){
     echo "<title> doctor Lookup </title>";
     $value = $_GET['name'];
     echo "<h1>Doctors with name matching $value</h1>";
-    $link = mysqli_connect("localhost","root", "MS-06ZakuII","hospital");
+    $link = mysqli_connect("localhost","root", "Password1","hospital");
     if(!$link){
         die("Failed to connect: " . mysqli_connect_error());
     }
-    $sqlresults = "SELECT * FROM doctor WHERE name='$value'";
-
+    $sqlresults = "SELECT * FROM doctor WHERE name LIKE CONCAT('$value', '%')";
+    
+    if (ctype_space($value)){
+    	$sqlresults = "SELECT * FROM doctor";
+    	
+    }
     $q_results = $link->query($sqlresults);
     if (!$q_results) {
         echo "Query failed: ". $link->error. "\n";
@@ -51,16 +56,17 @@ function displayResults(){
     }
     else{
         echo "<h3>Doctors with matching name:</h3>";
+	echo "<h4>Name&nbsp;|&nbsp;Birthday&nbsp;|&nbsp;Start Date</h4>";
         while ($s_names = $q_results->fetch_assoc()) {
             echo $s_names["name"]. "\t\t". $s_names["birthday"]. "\t\t". $s_names["start_date"]. "<br \>";
-            if (isset($_GET['nurseDrRelat')){
-                echo "Nurses that work with this doctor<br>;
+            if (isset($_GET['nurseDrRelat'])){
+                echo "Nurses that work with this doctor<br>";
                 $name = $s_names["name"];
-                $sql2 = "SELECT * FROM (SELECT B.name FROM (SELECT W.nurse_id, D.name FROM doctor D JOIN works_under W where D.employee_id = W.doctor_id) AS A JOIN  (SELECT name, employee_id FROM nurse) AS B WHERE B.employee_id = A.nurse_id) AS C WHERE C.name=$name";
+		$sql2 = "SELECT Nurse, name FROM(SELECT * FROM (SELECT W.nurse_id, D.name FROM doctor D JOIN works_under W where D.employee_id = W.doctor_id) AS A JOIN  (SELECT name as Nurse, employee_id FROM nurse) AS B WHERE B.employee_id = A.nurse_id) as Q WHERE name='$name'";
                 $results2 = $link->query($sql2);
                 if ($results2-> num_rows !== 0){
                         while($nu = $results2->fetch_assoc()){
-                            echo "&nbsp;&nbsp;&nbsp;&nbsp;". $nu['name']. "<br>";
+                            echo "&nbsp;&nbsp;&nbsp;&nbsp;". $nu['Nurse']. "<br>";
                         }
                 }
                 else{
@@ -70,17 +76,18 @@ function displayResults(){
             if (isset($_GET['doctorPatient'])){
                 echo "Doctor's Patients<br>";
                 $name = $s_names["name"];
-                $sql2 = "SELECT * FROM (SELECT B.name FROM (SELECT C.patient_id FROM doctor D JOIN cares_for C where C.doctor_id=D.employee_id) AS A JOIN (SELECT name, ssid FROM patient) AS B WHERE B.ssid =A.patient_id) AS D WHERE D.name = $name";
+		$sql2 = "SELECT Patient, name FROM (SELECT * FROM (SELECT C.patient_id, D.name FROM doctor D JOIN cares_for C where D.employee_id = C.doctor_id) AS A JOIN  (SELECT name as Patient, ssid FROM patient) AS B WHERE B.ssid = A.patient_id) as Q WHERE name = '$name'";
                 $results2 = $link->query($sql2);
                 if ($results2-> num_rows !== 0){
                         while($nu = $results2->fetch_assoc()){
-                            echo "&nbsp;&nbsp;&nbsp;&nbsp;". $nu['name']. "<br>";
+                            echo "&nbsp;&nbsp;&nbsp;&nbsp;". $nu['Patient']. "<br>";
                         }
                 }
                 else{
                         echo "&nbsp;&nbsp;&nbsp;&nbsp;Has No Patients!<br>";
                 }
             }
+   	    echo "<br>";
         }
     }
 
