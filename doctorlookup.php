@@ -26,14 +26,7 @@ function makeForm(){
     echo "\t<input type='checkbox' name='nurseDrRelat' value='Show'> Show which Nurses the Doctor works with:";
 
     echo "\t<input type='checkbox' name='doctorPatient' value='Show'> Show which Patients the Doctor Cares For:";
-    echo "\t<br>Sort By:\n";
-    echo "\t<select>";
 
-    echo "\t\t<option value='name'>Name</option>";
-    echo "\t\t<option value='bday'>Birthday</option>";
-    echo "\t\t<option value='date'>Date Joined</option>";
-    echo "\t\t<option value='id'>Employee ID</option>";
-    echo "\t</select>";
 
    
 }
@@ -59,7 +52,35 @@ function displayResults(){
     else{
         echo "<h3>Doctors with matching name:</h3>";
         while ($s_names = $q_results->fetch_assoc()) {
-            echo $s_names["name"]. "\t\t". $s_names["Birthday"]. "\t\t". $s_names["start_date"]. "<br \>";
+            echo $s_names["name"]. "\t\t". $s_names["birthday"]. "\t\t". $s_names["start_date"]. "<br \>";
+            if (isset($_GET['nurseDrRelat')){
+                echo "Nurses that work with this doctor<br>;
+                $name = $s_names["name"];
+                $sql2 = "SELECT * FROM (SELECT B.name FROM (SELECT W.nurse_id, D.name FROM doctor D JOIN works_under W where D.employee_id = W.doctor_id) AS A JOIN  (SELECT name, employee_id FROM nurse) AS B WHERE B.employee_id = A.nurse_id) AS C WHERE C.name=$name";
+                $results2 = $link->query($sql2);
+                if ($results2-> num_rows !== 0){
+                        while($nu = $results2->fetch_assoc()){
+                            echo "&nbsp;&nbsp;&nbsp;&nbsp;". $nu['name']. "<br>";
+                        }
+                }
+                else{
+                        echo "&nbsp;&nbsp;&nbsp;&nbsp;Has No Nurses!<br>";
+                }
+            }
+            if (isset($_GET['doctorPatient'])){
+                echo "Doctor's Patients<br>";
+                $name = $s_names["name"];
+                $sql2 = "SELECT * FROM (SELECT B.name FROM (SELECT C.patient_id FROM doctor D JOIN cares_for C where C.doctor_id=D.employee_id) AS A JOIN (SELECT name, ssid FROM patient) AS B WHERE B.ssid =A.patient_id) AS D WHERE D.name = $name";
+                $results2 = $link->query($sql2);
+                if ($results2-> num_rows !== 0){
+                        while($nu = $results2->fetch_assoc()){
+                            echo "&nbsp;&nbsp;&nbsp;&nbsp;". $nu['name']. "<br>";
+                        }
+                }
+                else{
+                        echo "&nbsp;&nbsp;&nbsp;&nbsp;Has No Patients!<br>";
+                }
+            }
         }
     }
 
